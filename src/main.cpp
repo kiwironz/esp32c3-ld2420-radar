@@ -10,12 +10,7 @@
 #define numgates 16
 
 // Wi-Fi / MQTT Config
-const char* ssid = "nogate";
-const char* password = "maramakamaram";
-const char* mqttServer = "192.168.5.160";
-const int mqttPort = 1883;
-const char* mqttUser = "ron";
-const char* mqttPassword = "M8r8m8k8!";
+#include "credentials.h"
 
 String baseTopic = "home/radar/ld2420";
 String availabilityTopic = baseTopic + "/availability";

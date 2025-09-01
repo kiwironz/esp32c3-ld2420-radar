@@ -21,3 +21,4 @@
  # IDE and editor files
  .vscode/
  *.code-workspace
+credentials.h
