@@ -1,0 +1,31 @@
+Gates: 0..15 (16 gates). Gate step ≈ 0.7 m (70 cm). The manual shows min/max gate registers range 0–15. The module’s practical reporting distance is typically cited as up to ~8 m depending on mount mode. 
+UNIT Electronics
+
+All multi-byte integer fields in the command frames are little-endian (ESPHome source explicitly documents and implements little-endian). Header/footer and length semantics are described in the ESPHome code. 
+ESPHome Documentation
+
+Frame layout (control/config frames):
+
+Header: 4 bytes, value 0xFAFBFCFD (sent as bytes 0xFD,0xFC,0xFB,0xFA).
+
+Length: 2 bytes uint16_t (little-endian) — length of the following command+data bytes, i.e. number of bytes between the length field and the footer.
+
+Command: 2 bytes uint16_t (little-endian).
+
+Data (command specific). Often register address fields are uint16_t, and threshold values are sent as 4-byte uint32 little-endian (ESPHome examples use uint32_t for thresholds even if values fit <65535). See example below.
+
+Footer: 4 bytes, value 0x01020304 (sent as 0x04,0x03,0x02,0x01).
+Example enable-config frame (ESPHome):
+FD FC FB FA 04 00 FF 00 02 00 04 03 02 01 — length 0x0004 → command 0x00FF + 0x0002 protocol/version. 
+ESPHome Documentation
+
+Energy/output data frame (what you read to get gate energies): ESPHome documents the “energy” output mode with layout: header, length, presence (1 byte), distance (likely uint16_t cm little-endian), 16 gate energies (each uint16_t), footer. ESPHome reads gate energies into uint16_t arrays. So parse gate energies as uint16_t little-endian. 
+ESPHome Documentation
+
+Practical notes / gotchas
+
+The user manual and community code (ESPHome) stress that thresholds are in the range 0..65535 (but implementations send them as 32-bit words). Use uint32_t when building frames unless you confirm otherwise on your exact FW version. ESPHome keeps factory thresholds as uint32_t and will clamp values to 65535 when needed. 
+ESPHome Documentation
+UNIT Electronics
+
+
