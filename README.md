@@ -30,7 +30,7 @@
 <ul>
 <li><strong>PlatformIO</strong>: Recommended for building and uploading (VSCode extension or CLI).</li>
 <li><strong>Libraries</strong>: Automatically installed via <code>platformio.ini</code> (AsyncTCP, AsyncMqttClient, ElegantOTA, ArduinoJson).</li>
-<li><strong>MQTT Broker</strong>: A running MQTT server (e.g., Mosquitto) at <code>192.168.5.160:1883</code> with credentials <code>ron</code> / <code>M8r8m8k8!</code> (update in code if different).</li>
+<li><strong>MQTT Broker</strong>: A running MQTT server (e.g., Mosquitto) at <code>192.168.5.160:1883</code> with credentials <code>username</code> / <code>password</code> (update in code if different).</li>
 </ul>
 <h3>Installation</h3>
 <ol>
@@ -72,7 +72,7 @@ cd &#x3C;repository_directory>
 <h3>MQTT Topics</h3>
 <ul>
 <li><strong>Subscribe to State Updates</strong>:
-<pre><code>mosquitto_sub -h 192.168.5.160 -p 1883 -u ron -P M8r8m8k8! -t "home/radar/ld2420/state"
+<pre><code>mosquitto_sub -h 192.168.5.160 -p 1883 -u username -P password -t "home/radar/ld2420/state"
 </code></pre>
 <ul>
 <li>Example output on presence detection:
@@ -88,18 +88,18 @@ cd &#x3C;repository_directory>
 <li><strong>Publish Configuration</strong>:
 <ul>
 <li>Set new sensitivities and reset time (16 values, 0-100):
-<pre><code>mosquitto_pub -h 192.168.5.160 -p 1883 -u ron -P M8r8m8k8! -t "home/radar/ld2420/config" -m '{"sensitivities":[10,10,10,10,10,10,100,100,100,100,100,100,100,100,100,100],"reset_time":5}'
+<pre><code>mosquitto_pub -h 192.168.5.160 -p 1883 -u username -P password -t "home/radar/ld2420/config" -m '{"sensitivities":[10,10,10,10,10,10,100,100,100,100,100,100,100,100,100,100],"reset_time":5}'
 </code></pre>
 </li>
 <li>The code verifies each gate and publishes errors if mismatches occur.</li>
 </ul>
 </li>
 <li><strong>Request Current Configuration</strong>:
-<pre><code>mosquitto_pub -h 192.168.5.160 -p 1883 -u ron -P M8r8m8k8! -t "home/radar/ld2420/config/get" -m ""
+<pre><code>mosquitto_pub -h 192.168.5.160 -p 1883 -u username -P password -t "home/radar/ld2420/config/get" -m ""
 </code></pre>
 <ul>
 <li>Sub to the response:
-<pre><code>mosquitto_sub -h 192.168.5.160 -p 1883 -u ron -P M8r8m8k8! -t "home/radar/ld2420/config/state"
+<pre><code>mosquitto_sub -h 192.168.5.160 -p 1883 -u username -P password -t "home/radar/ld2420/config/state"
 </code></pre>
 </li>
 <li>Example output:
@@ -109,18 +109,18 @@ cd &#x3C;repository_directory>
 </ul>
 </li>
 <li><strong>Reboot Device</strong>:
-<pre><code>mosquitto_pub -h 192.168.5.160 -p 1883 -u ron -P M8r8m8k8! -t "home/radar/ld2420/reset" -m ""
+<pre><code>mosquitto_pub -h 192.168.5.160 -p 1883 -u username -P password -t "home/radar/ld2420/reset" -m ""
 </code></pre>
 </li>
 <li><strong>Factory Reset Radar</strong>:
-<pre><code>mosquitto_pub -h 192.168.5.160 -p 1883 -u ron -P M8r8m8k8! -t "home/radar/ld2420/reset_factory" -m ""
+<pre><code>mosquitto_pub -h 192.168.5.160 -p 1883 -u username -P password -t "home/radar/ld2420/reset_factory" -m ""
 </code></pre>
 <ul>
 <li>Resets the LD2420 and reboots the ESP32.</li>
 </ul>
 </li>
 <li><strong>Error Messages</strong>:
-<pre><code>mosquitto_sub -h 192.168.5.160 -p 1883 -u ron -P M8r8m8k8! -t "home/radar/ld2420/error"
+<pre><code>mosquitto_sub -h 192.168.5.160 -p 1883 -u username -P password -t "home/radar/ld2420/error"
 </code></pre>
 <ul>
 <li>Examples:
