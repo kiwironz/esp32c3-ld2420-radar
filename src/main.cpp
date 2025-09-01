@@ -12,6 +12,13 @@
 // Wi-Fi / MQTT Config
 #include "credentials.h"
 
+//  const char* ssid = "ssid";
+//  const char* password = "wifi password";
+//  const char* mqttServer = "mqtt broker ip";
+//  const int mqttPort = 1883;
+//  const char* mqttUser = "mqtt username";
+//  const char* mqttPassword = "mqtt password";
+
 String baseTopic = "home/radar/ld2420";
 String availabilityTopic = baseTopic + "/availability";
 String stateTopic = baseTopic + "/state";
